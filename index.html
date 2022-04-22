@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>chidiebere micro-task 3</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Micro Task 3. Wiki --Submit a quote By chidiebere chukwudi</h2>
+      <p>The form below contains a textarea for comments:</p>
+      Rules:
+      <br />
+      1. Use valid quotes only e.g "this is a valid quote"
+      <div class="col-6">
+        <span class="text-danger" id="errorMsg"> </span>
+        <form id="ActualForm">
+          <div class="form-group">
+            <label for="comment">Submit a quote:</label>
+            <textarea
+              class="form-control"
+              rows="2"
+              id="quote"
+              required
+            ></textarea>
+          </div>
+
+          <button class="btn btn-primary btn-sm" id="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <script>
+
+        /*
+        Outreachy for wikimedia  task 
+        
+        */
+      $(document).ready(function () {
+        $("#ActualForm").submit(function (e) {
+          e.preventDefault();
+
+          const quote = $("#quote").val();
+          const pattern = /(["'])(?:(?=(\\?))\2.)*?\1/;
+          const validQuote = new RegExp(pattern);
+          // rest the error message after diplaying new message
+          function resetErrorMsg() {
+            return $(this).keyup(function () {
+              $("#errorMsg").html("");
+            });
+          }
+          
+          resetErrorMsg();
+          //check if the field is empty. Though html "required "can validate this though
+          if (!quote) {
+            $("#errorMsg").html("Form should not be empty");
+          }
+          //ensure that we have valid quote that mtaches the regexExpression 
+          if (!validQuote.test(quote)) {
+            $("#errorMsg").html("Please enter a valid quote").removeClass("text-success").addClass("text-danger");
+          } else  {
+            $("#errorMsg").html("A valid quote!").removeClass("text-danger").addClass("text-success")
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
